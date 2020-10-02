@@ -1,9 +1,6 @@
 ﻿open System
-open Domain
-open Persistence.File
-
-[<LiteralAttribute>]
-let path = "todo.done.txt"
+open Done.Domain
+open Done.Persistence.File
 
 let helpMessage = "Usage: `done d <number>` or `done w <number>` to get items done <number> of days/weeks ago"
 
@@ -27,15 +24,11 @@ let tryParseArgs (argv: string []) =
     | [|period|] -> tryParsePeriod period 0.0
     | _ -> None
 
-let save = saveCompletedItem path
-let get = getCompletedItems path
-
 let printIfError = function
     | Error e -> printfn "%s" e
     | Ok _ -> ()
 
-[<EntryPoint>]
-let main argv =
+let dispatch argv =
     let cmd = tryParseArgs argv
     match cmd with
     | Some c ->
@@ -46,4 +39,8 @@ let main argv =
             |> Array.iter (Done.toString >> printfn "%s")
         | Add s -> s |> Done.createDefault |> save |> printIfError
     | None -> printfn "%s" helpMessage
+
+[<EntryPoint>]
+let main argv =
+    argv |> dispatch
     0 // return an integer exit code
