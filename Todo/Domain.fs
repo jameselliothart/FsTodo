@@ -9,6 +9,7 @@ module Todo =
     | Nothing
 
     type TodoEvent =
+    | AddedTodoEvent of string
     | RemainingTodosEvent of EnumeratedTodos
     | CompletedTodosEvent of EnumeratedTodos
     | PurgedTodosEvent of EnumeratedTodos

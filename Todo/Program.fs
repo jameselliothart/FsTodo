@@ -32,7 +32,7 @@ let dispatch = function
     | Show ->
         showTodos()
     | Add data ->
-        add data |> printIfError
+        Todo.AddedTodoEvent data |> handle
         showTodos()
     | Remove i ->
         get()
