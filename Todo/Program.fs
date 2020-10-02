@@ -1,6 +1,6 @@
 ﻿open System
 open Domain
-open Persistence.File
+open Config
 
 let helpMessage = "Valid commands are 'a <item>' and 'r <index>' for Add and Remove"
 
@@ -26,23 +26,7 @@ let (|Show|Add|Remove|Purge|Invalid|) (argv: string []) =
         | _ -> Invalid helpMessage
     | _-> Invalid helpMessage
 
-let printTodo : PrintTodo = function
-    | Todo.Nothing -> printfn "No todos yet"
-    | Todo.Todos todos -> todos |> Array.iter (fun t -> printfn "%i. %s" (Todo.index t) (Todo.value t))
-
 let showTodos () = get() |> printTodo
-
-let printIfError = function
-    | Error e -> printfn "%s" e
-    | Ok _ -> ()
-
-let remainingTodosEvent = new Event<Todo.EnumeratedTodos>()
-remainingTodosEvent.Publish |> Event.add (save >> printIfError)
-
-let completedItemsEvent = new Event<Todo.EnumeratedTodos>()
-completedItemsEvent.Publish |> Event.add (printTodo)
-completedItemsEvent.Publish
-|> Event.add (Todo.toCompletedItems >> Option.iter (Array.iter (Done.Persistence.File.save >> printIfError)))
 
 let dispatch = function
     | Show ->
@@ -51,12 +35,13 @@ let dispatch = function
         add data |> printIfError
         showTodos()
     | Remove i ->
-        let (completed, remaining) =
-            get() |> Todo.partitionCompletedTodo i
-        remainingTodosEvent.Trigger remaining
-        completedItemsEvent.Trigger completed
+        get()
+        |> Todo.complete i
+        |> List.iter handle
     | Purge i ->
-        get() |> Todo.partitionCompletedTodo i |> (snd >> remainingTodosEvent.Trigger)
+        get()
+        |> Todo.purge i
+        |> List.iter handle
     | Invalid msg -> printfn "%s" msg
 
 [<EntryPoint>]

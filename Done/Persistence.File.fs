@@ -2,9 +2,6 @@ module Done.Persistence.File
 open Done.Domain
 open System.IO
 
-[<LiteralAttribute>]
-let path = "todo.done.txt"
-
 let saveCompletedItem path : SaveCompletedItem =
     fun item ->
         use writer = File.AppendText path
@@ -13,11 +10,7 @@ let saveCompletedItem path : SaveCompletedItem =
 
 let getCompletedItems path : GetCompletedItems =
     fun _ ->
-        let allItems = File.ReadAllLines path
-        allItems
+        if (File.Exists path) then File.ReadAllLines path else [||]
         |> Array.map Done.tryParse
         |> Array.filter Option.isSome
         |> Array.map (fun i -> i.Value)
-
-let save = saveCompletedItem path
-let get = getCompletedItems path

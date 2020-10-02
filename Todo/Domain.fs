@@ -8,6 +8,11 @@ module Todo =
     | Todos of Todo array
     | Nothing
 
+    type TodoEvent =
+    | RemainingTodosEvent of EnumeratedTodos
+    | CompletedTodosEvent of EnumeratedTodos
+    | PurgedTodosEvent of EnumeratedTodos
+
     let create (todos: string[]) =
         match todos with
         | [||] -> Nothing
@@ -20,7 +25,7 @@ module Todo =
     let value (Todo(_,item)) = item
     let index (Todo(i,_)) = i
 
-    let partitionCompletedTodo index todos =
+    let private partitionTodos index todos =
         match todos with
         | Nothing -> (Nothing, Nothing)
         | Todos todos ->
@@ -35,6 +40,14 @@ module Todo =
             |> Array.map (value >> Done.createDefault)
             |> Some
         | Nothing -> None
+
+    let complete index todos =
+        partitionTodos index todos
+        |> fun (completed, remaining) -> [CompletedTodosEvent completed; RemainingTodosEvent remaining]
+
+    let purge index todos =
+        partitionTodos index todos
+        |> fun (purged, remaining) -> [PurgedTodosEvent purged; RemainingTodosEvent remaining]
 
 type PrintTodo = Todo.EnumeratedTodos -> unit
 type GetTodos = unit -> Todo.EnumeratedTodos

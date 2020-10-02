@@ -2,9 +2,6 @@ module Persistence.File
 open Domain
 open System.IO
 
-[<LiteralAttribute>]
-let path = "todo.txt"
-
 let writeAllLines path (s: string []) =
     File.WriteAllLines(path, s)
 
@@ -33,7 +30,3 @@ let getTodos path : GetTodos =
     fun () ->
         if (File.Exists path) then File.ReadAllLines path else [||]
         |> Todo.create
-
-let get = getTodos path
-let add = addTodo path
-let save = saveTodos path

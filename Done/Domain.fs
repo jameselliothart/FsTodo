@@ -35,7 +35,7 @@ module Done =
                             )
                     )
                 |> Option.map (fun (date, item) -> (DateTime.TryParse(date), item))
-                |> Option.map (fun ((success, date), item) -> if success then Some {CompletedOn = date; Item = item} else None)
+                |> Option.map (fun ((success, date), item) -> if success then Some (create date item) else None)
             with
             | :? ArgumentException -> None
         match result with

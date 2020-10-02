@@ -1,6 +1,6 @@
 ﻿open System
 open Done.Domain
-open Done.Persistence.File
+open Done.Config
 
 let helpMessage = "Usage: `done d <number>` or `done w <number>` to get items done <number> of days/weeks ago"
 

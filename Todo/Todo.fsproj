@@ -4,11 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Domain.fs" />
-    <Compile Include="Persistence.File.fs" />
-    <Compile Include="Program.fs" />
+    <ProjectReference Include="..\Done\Done.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Done\Done.fsproj" />
+    <Compile Include="Domain.fs" />
+    <Compile Include="Persistence.File.fs" />
+    <Compile Include="Config.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
