@@ -434,4 +434,7 @@ $RECYCLE.BIN/
 
 # ionide
 .ionide
-Done/todo.done.txt
+
+# local todo files
+todo.done.txt
+todo.txt
