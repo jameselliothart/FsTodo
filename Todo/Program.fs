@@ -32,7 +32,7 @@ let dispatch = function
     | Show ->
         showTodos()
     | Add data ->
-        Todo.AddedTodoEvent data |> handle
+        Todo.TodoAddedEvent data |> handle
         showTodos()
     | Remove i ->
         get()

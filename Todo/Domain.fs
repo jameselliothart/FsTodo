@@ -9,10 +9,10 @@ module Todo =
     | Nothing
 
     type TodoEvent =
-    | AddedTodoEvent of string
-    | RemainingTodosEvent of EnumeratedTodos
-    | CompletedTodosEvent of EnumeratedTodos
-    | PurgedTodosEvent of EnumeratedTodos
+    | TodoAddedEvent of string
+    | TodosRemainingEvent of EnumeratedTodos
+    | TodosCompletedEvent of EnumeratedTodos
+    | TodosPurgedEvent of EnumeratedTodos
 
     let create (todos: string[]) =
         match todos with
@@ -44,11 +44,11 @@ module Todo =
 
     let complete index todos =
         partitionTodos index todos
-        |> fun (completed, remaining) -> [CompletedTodosEvent completed; RemainingTodosEvent remaining]
+        |> fun (completed, remaining) -> [TodosCompletedEvent completed; TodosRemainingEvent remaining]
 
     let purge index todos =
         partitionTodos index todos
-        |> fun (purged, remaining) -> [PurgedTodosEvent purged; RemainingTodosEvent remaining]
+        |> fun (purged, remaining) -> [TodosPurgedEvent purged; TodosRemainingEvent remaining]
 
 type PrintTodo = Todo.EnumeratedTodos -> unit
 type GetTodos = unit -> Todo.EnumeratedTodos

@@ -38,7 +38,7 @@ let purgedTodosEvent = new Event<Todo.EnumeratedTodos>()
 purgedTodosEvent.Publish |> Event.add (printTodo)
 
 let handle = function
-    | Todo.AddedTodoEvent todo -> addedTodoEvent.Trigger todo
-    | Todo.RemainingTodosEvent todos -> remainingTodosEvent.Trigger todos
-    | Todo.CompletedTodosEvent todos -> completedTodosEvent.Trigger todos
-    | Todo.PurgedTodosEvent todos -> purgedTodosEvent.Trigger todos
+    | Todo.TodoAddedEvent todo -> addedTodoEvent.Trigger todo
+    | Todo.TodosRemainingEvent todos -> remainingTodosEvent.Trigger todos
+    | Todo.TodosCompletedEvent todos -> completedTodosEvent.Trigger todos
+    | Todo.TodosPurgedEvent todos -> purgedTodosEvent.Trigger todos
