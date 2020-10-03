@@ -50,4 +50,4 @@ module Done =
         since < item.CompletedOn
 
 type SaveCompletedItem = Done.CompletedItem -> Result<unit,string>
-type GetCompletedItems = unit -> Done.CompletedItem array
+type GetCompletedItems = unit -> Done.CompletedItem seq

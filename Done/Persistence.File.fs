@@ -17,3 +17,4 @@ let getCompletedItems path : GetCompletedItems =
         |> Array.map Done.tryParse
         |> Array.filter Option.isSome
         |> Array.map (fun i -> i.Value)
+        |> Array.toSeq

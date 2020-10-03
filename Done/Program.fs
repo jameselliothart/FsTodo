@@ -1,4 +1,4 @@
-﻿open System
+open System
 open Done.Domain
 open Done.Config
 
@@ -35,8 +35,8 @@ let dispatch argv =
         match c with
         | Query p ->
             get()
-            |> Array.filter (Done.completedSince p)
-            |> Array.iter (Done.toString >> printfn "%s")
+            |> Seq.filter (Done.completedSince p)
+            |> Seq.iter (Done.toString >> printfn "%s")
         | Add s -> s |> Done.createDefault |> save |> printIfError
     | None -> printfn "%s" helpMessage
 
