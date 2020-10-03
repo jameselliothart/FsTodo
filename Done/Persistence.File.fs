@@ -2,6 +2,9 @@ module Done.Persistence.File
 open Done.Domain
 open System.IO
 
+[<LiteralAttribute>]
+let Path = "todo.done.txt"
+
 let saveCompletedItem path : SaveCompletedItem =
     fun item ->
         use writer = File.AppendText path
