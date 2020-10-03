@@ -12,7 +12,8 @@ let private startOfWeek (date: DateTime) = date.AddDays(-(float)date.DayOfWeek) 
 let private weeksAgo (date: DateTime) weeks = date.AddDays(-7.0 * weeks) |> startOfWeek |> startOfDay
 
 module Done =
-    type CompletedItem = {CompletedOn: DateTime; Item: string}
+
+    [<CLIMutable>] type CompletedItem = {CompletedOn: DateTime; Item: string}
 
     let create (completedOn: DateTime) (item: string) =
         {CompletedOn = completedOn; Item = item}
