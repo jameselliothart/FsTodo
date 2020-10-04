@@ -6,9 +6,9 @@ open Persistence.Sqlite
 // let get = getCompletedItems Path
 
 let save =
-    Db.Schema.initializeDiskDb DataSource
+    Db.Schema.initializeDiskDb ()
     Db.saveCompletedItem
 
 let get =
-    Db.Schema.initializeDiskDb DataSource
+    Db.Schema.initializeDiskDb ()
     Db.getCompletedItems

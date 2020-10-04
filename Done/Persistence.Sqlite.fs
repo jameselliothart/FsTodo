@@ -35,8 +35,8 @@ module Db =
                 """
         }
 
-        let initializeDiskDb dataSource =
-            if (IO.File.Exists dataSource) then ()
+        let initializeDiskDb () =
+            if (IO.File.Exists DataSource) then ()
             else createTables |> Async.RunSynchronously |> ignore
 
     let saveCompletedItem : SaveCompletedItem =
