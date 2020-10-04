@@ -4,15 +4,15 @@ open Done.Domain
 module Todo =
     type Todo = private Todo of index: int * item: string
 
-    type EnumeratedTodos =
+    type TodoList =
     | Todos of Todo array
     | Nothing
 
     type TodoEvent =
     | TodoAddedEvent of string
-    | TodosRemainingEvent of EnumeratedTodos
-    | TodosCompletedEvent of EnumeratedTodos
-    | TodosPurgedEvent of EnumeratedTodos
+    | TodosRemainingEvent of TodoList
+    | TodosCompletedEvent of TodoList
+    | TodosPurgedEvent of TodoList
 
     let create (todos: string[]) =
         match todos with
@@ -50,7 +50,7 @@ module Todo =
         partitionTodos index todos
         |> fun (purged, remaining) -> [TodosPurgedEvent purged; TodosRemainingEvent remaining]
 
-type PrintTodo = Todo.EnumeratedTodos -> unit
-type GetTodos = unit -> Todo.EnumeratedTodos
+type PrintTodo = Todo.TodoList -> unit
+type GetTodos = unit -> Todo.TodoList
 type AddTodo = string -> Result<unit,string>
-type SaveTodos = Todo.EnumeratedTodos -> Result<unit,string>
+type SaveTodos = Todo.TodoList -> Result<unit,string>

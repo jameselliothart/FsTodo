@@ -23,10 +23,10 @@ let printTodo : PrintTodo = function
 let addedTodoEvent = new Event<string>()
 addedTodoEvent.Publish |> Event.add (add >> printIfError)
 
-let remainingTodosEvent = new Event<Todo.EnumeratedTodos>()
+let remainingTodosEvent = new Event<Todo.TodoList>()
 remainingTodosEvent.Publish |> Event.add (save >> printIfError)
 
-let completedTodosEvent = new Event<Todo.EnumeratedTodos>()
+let completedTodosEvent = new Event<Todo.TodoList>()
 completedTodosEvent.Publish |> Event.add (printTodo)
 completedTodosEvent.Publish
 |> Event.add (
@@ -34,7 +34,7 @@ completedTodosEvent.Publish
         Option.iter (Array.iter (Done.Config.save >> printIfError))
     )
 
-let purgedTodosEvent = new Event<Todo.EnumeratedTodos>()
+let purgedTodosEvent = new Event<Todo.TodoList>()
 purgedTodosEvent.Publish |> Event.add (printTodo)
 
 let handle = function
