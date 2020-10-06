@@ -26,12 +26,12 @@ module Todo =
     let value (Todo(_,item)) = item
     let index (Todo(i,_)) = i
 
-    let private partitionTodos index todos =
+    let private partitionTodos idx todos =
         match todos with
         | Nothing -> (Nothing, Nothing)
         | Todos todos ->
             todos
-            |> Array.partition (fun (Todo(i,_)) -> i = index)
+            |> Array.partition (fun t -> index t = idx)
             |> fun (completed, remaining) -> (Todos completed, Todos remaining)
 
     let toCompletedItems todos =
