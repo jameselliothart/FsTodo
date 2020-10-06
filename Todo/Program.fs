@@ -2,7 +2,7 @@
 open Domain
 open Config
 
-let helpMessage = "Valid commands are 'a <item>' and 'r <index>' for Add and Remove"
+let HelpMessage = "Valid commands are 'a <item>' and 'r <index>' for Add and Remove"
 
 let tryParseIndex (data: string) =
     match Int32.TryParse(data) with
@@ -23,8 +23,8 @@ let (|Show|Add|Remove|Purge|Invalid|) (argv: string []) =
             match tryParseIndex data with
             | Some i -> Purge i
             | None -> Invalid "Specify number index of item to Purge"
-        | _ -> Invalid helpMessage
-    | _-> Invalid helpMessage
+        | _ -> Invalid HelpMessage
+    | _-> Invalid HelpMessage
 
 let showTodos () = get() |> printTodo
 
