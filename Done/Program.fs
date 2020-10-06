@@ -2,7 +2,9 @@
 open Done.Domain
 open Done.Config
 
-let helpMessage = "Usage: `done d <number>` or `done w <number>` to get items done <number> of days/weeks ago"
+[<Literal>]
+let HelpMessage =
+    "Usage: `done d <number>` or `done w <number>` to get items done <number> of days/weeks ago or add with `done a`"
 
 type Command =
 | Add of string
@@ -38,7 +40,7 @@ let dispatch argv =
             |> Seq.filter (Done.completedSince p)
             |> Seq.iter (Done.toString >> printfn "%s")
         | Add s -> s |> Done.createDefault |> save |> printIfError
-    | None -> printfn "%s" helpMessage
+    | None -> printfn "%s" HelpMessage
 
 [<EntryPoint>]
 let main argv =
