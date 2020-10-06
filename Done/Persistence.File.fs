@@ -3,7 +3,7 @@ open Done.Domain
 open System.IO
 
 [<LiteralAttribute>]
-let Path = "todo.done.txt"
+let FilePath = "todo.done.txt"
 
 let saveCompletedItem path : SaveCompletedItem =
     fun item ->
