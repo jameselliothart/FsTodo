@@ -14,7 +14,6 @@ let saveCompletedItem path : SaveCompletedItem =
 let getCompletedItems path : GetCompletedItems =
     fun _ ->
         if (File.Exists path) then File.ReadAllLines path else [||]
-        |> Array.map Done.tryParse
-        |> Array.filter Option.isSome
-        |> Array.map (fun i -> i.Value)
-        |> Array.toSeq
+        |> Seq.map Done.tryParse
+        |> Seq.filter Option.isSome
+        |> Seq.map (fun i -> i.Value)
